@@ -39,6 +39,22 @@ public class FXMLController {
     @FXML
     void doRun(ActionEvent event) {
     	txtResult.clear();
+    	Nerc nercInserito = this.cmbNerc.getValue();
+    	String stringaAnno = this.txtYears.getText();
+    	String stringsOre = this.txtHours.getText();
+    	
+    	int anno;
+    	int ore;
+    	try {
+    		anno = Integer.parseInt(stringaAnno);
+    		ore = Integer.parseInt(stringsOre);
+    	}
+    	catch(NumberFormatException nbe) {
+    		this.txtResult.setText("ERRORE! i campi anno e ore devono essere numerici");
+    		return;
+    	}
+    	
+    	this.txtResult.setText(model.trovaCombinazioneOttima(nercInserito,anno,ore));
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -54,5 +70,7 @@ public class FXMLController {
     
     public void setModel(Model model) {
     	this.model = model;
+    	this.cmbNerc.getItems().addAll(model.getNercList());
     }
+    
 }
